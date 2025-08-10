@@ -6,7 +6,7 @@ https://github.com/user-attachments/assets/978976ef-db0b-4fd9-aaa9-573f97ce77e7
 
 **使用项目**
 
-* akshare项目提供了大量的a股数据api，易于使用
+* akshare项目提供了大量的a股数据api，目前我直接复制了对应项目的代码到项目文件（akshare）
   参考文档: https://akshare.akfamily.xyz/tutorial.html
 
 # 1. 项目主体结构
