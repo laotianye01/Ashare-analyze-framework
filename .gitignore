@@ -1,0 +1,29 @@
+# 虚拟环境
+ashareEnv/
+
+# 忽略所有 Python 缓存
+**/__pycache__/
+*.py[cod]
+
+# 日志和缓存
+logs/
+cache/
+*.log
+
+# 数据输出
+report/
+
+# 数据库文件（如用 SQLite）
+*.sqlite3
+*.db
+
+# 本地配置
+*.env
+.env
+
+# VSCode/IDE相关
+.vscode/
+.idea/
+
+# 不追踪 alembic 的自动生成
+alembic.ini

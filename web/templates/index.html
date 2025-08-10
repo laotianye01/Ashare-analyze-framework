@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调度器 Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>调度器 Dashboard</h1>
+        <button id="refresh-btn">刷新状态</button>
+    </header>
+    <main>
+        <div class="sidebar">
+            <h2>调度器列表</h2>
+            <ul id="scheduler-list"></ul>
+
+            <hr>
+            <h3>启动新调度器</h3>
+            <div id="start-scheduler-form">
+                <label for="pipeline-config">选择流水线配置:</label>
+                <select id="pipeline-config"></select>
+                <button id="start-btn">启动</button>
+            </div>
+
+            <div class="config-editor-container">
+                <h4>配置文件内容:</h4>
+                <textarea id="config-editor" rows="20" cols="40"></textarea>
+            </div>
+        </div>
+        <div class="content-panel">
+            <div id="pipeline-view" class="hidden">
+                <h2>Pipeline: <span id="pipeline-name"></span></h2>
+                <div id="pipeline-status"></div>
+                <div class="mermaid"></div>
+            </div>
+            <div id="task-details" class="hidden">
+                <h3>任务详情: <span id="task-name"></span></h3>
+                <div id="task-info"></div>
+            </div>
+            <div id="no-selection">
+                <p>请从左侧选择一个调度器</p>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

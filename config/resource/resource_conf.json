@@ -1,0 +1,30 @@
+{
+    "postgres": {
+        "db_url": "postgresql+psycopg2://db_name:db_passward@localhost:5432/stock_db",
+        "pool_pre_ping": true,
+        "pool_size": 5,
+        "max_overflow": 10
+    },
+    "searcher": {
+        "driver_path": "./tasks/news_data/chromedriver/chromedriver-linux64/chromedriver"
+    },
+    "LLMMemoryManager": {
+        "db_params": {
+            "dbname": "stock_db",
+            "user": "username",
+            "password": "passward",
+            "host": "localhost",
+            "port": "5432"
+        },
+        "dim": 384
+    },
+    "AILLM":{
+        "api_key": "your key",
+        "endpoint_url": "your model endpoint",
+        "model_name": "gpt-3.5-turbo",
+        "temperature": 0.7,
+        "max_tokens": 2048,
+        "use_short_term_memory": true,
+        "use_web_search": false
+    }
+}

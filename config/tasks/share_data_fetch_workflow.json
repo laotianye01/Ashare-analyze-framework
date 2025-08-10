@@ -1,0 +1,64 @@
+{
+    "name": "fetch_share_data",
+    "multi_launch": false,          
+    "if_tmp": false,           
+    "daily_launch_times": [], 
+    "launch_interval_minutes": 60,
+    "retry_interval": 1,
+    "max_retry_times": 3,
+    "save_path": "./cache/tmp",
+    "tasks": [
+      {
+        "name": "get_share_history",
+        "task_class": "FetchAShareHistory",
+        "params": {
+          "stock_code": "",
+          "save": 2,
+          "target_db": "RealtimeShare"
+        },
+        "retry_interval": 10,
+        "dependencies": {}
+      },
+      {
+        "name": "get_share_news",
+        "task_class": "FetchStockNews",
+        "params": {
+          "stock_code": "",
+          "save": 2,
+          "target_db": "StockNews"
+        },
+        "retry_interval": 10,
+        "dependencies": {}
+      },
+      {
+        "name": "get_financial_report",
+        "task_class": "FetchFinReport",
+        "params": {
+          "register": false,
+          "save": 2,
+          "target_db": "FinanceStatement",
+          "stock_code": ""
+        },
+        "retry_interval": 10,
+        "dependencies": {
+          "get_share_history": ""
+        }
+      },
+      {
+        "name": "fetch_AI_LLM_chat",
+        "task_class": "FetchAILLMChat",
+        "params": {
+          "use_long_term_memory": false,
+          "vector_database_index": "",
+          "save": 2,
+          "user_prompt": "你将作为我的分析员。下面为我将你提供的若干信息，请你根据有关信息，生成对应公司的的简报，并分析其未来经营情况，与市场可能对其产生的预期",
+          "all_data": {}
+        },
+        "retry_interval": 10,
+        "dependencies": {
+          "get_share_history": "all_data",
+          "get_financial_report": "all_data"
+        }
+      }
+    ]
+  }

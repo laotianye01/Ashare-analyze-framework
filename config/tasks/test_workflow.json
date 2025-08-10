@@ -1,0 +1,36 @@
+{
+    "name": "test_workflow",
+    "multi_launch": true, 
+    "if_tmp": true,                   
+    "daily_launch_times": [], 
+    "launch_interval_minutes": 10,
+    "retry_interval": 10,
+    "max_retry_times": 3,
+    "save_path": "./cache/tmp",
+    "tasks": [
+      {
+        "name": "current_a_share_info",
+        "task_class": "FetchAllAShareSpot",
+        "params": {
+          "save": 2,
+          "target_db": "RealtimeShare"
+        },
+        "retry_interval": 100,
+        "dependencies": {}
+      },
+      {
+        "name": "get_target_share",
+        "task_class": "FetchTargetShare",
+        "params": {
+            "register": true,
+            "source": "cache",
+            "ashare_data": null,
+            "sql": "SELECT r.* FROM ashare_data AS r WHERE r.update_time = (SELECT MAX(update_time) FROM ashare_data) ORDER BY r.turnover DESC LIMIT 3;"
+        },
+        "retry_interval": 10,
+        "dependencies": {
+            "current_a_share_info": "ashare_data"
+        }
+      }
+    ]
+  }

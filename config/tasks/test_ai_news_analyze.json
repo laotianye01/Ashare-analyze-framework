@@ -1,0 +1,52 @@
+{
+    "name": "test_pipeline",
+    "multi_launch": false,      
+    "if_tmp": true,               
+    "daily_launch_times": [], 
+    "launch_interval_minutes": 60,
+    "retry_interval": 10,
+    "max_retry_times": 3,
+    "save_path": "./cache/tmp",
+    "tasks": [
+      {
+        "name": "get_info1",
+        "task_class": "FetchBingNews",
+        "params": {
+          "query": "中国 财经 新闻",
+          "max_results": 15,
+          "whitelist": [
+              "finance.sina.com.cn",
+              "cn.reuters.com",
+              "finance.qq.com",
+              "finance.cctv.com",
+              "www.bing.com",
+              "finance.china.com.cn"
+            ]
+        },
+        "retry_interval": 10,
+        "dependencies": {}
+      },
+      {
+        "name": "get_info2",
+        "task_class": "FetchDailyNews",
+        "params": {},
+        "retry_interval": 10,
+        "dependencies": {}
+      },
+      {
+        "name": "analyze",
+        "task_class": "FetchAILLMChat",
+        "params": {
+          "use_long_term_memory": false,
+          "vector_database_index": "",
+          "user_prompt": "你将作为我的新闻分析员。下面为我想你提供的若干条财经新闻，请你选出其中对中国金融市场有影响的新闻，并基于其内容，提取关键信息，并将新闻摘要返回给我",
+          "net_search_prompt": ""
+        },
+        "retry_interval": 10,
+        "dependencies": {
+          "get_info1": "net_search_prompt",
+          "get_info2": "net_search_prompt"
+        }
+      }
+    ]
+  }

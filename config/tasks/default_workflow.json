@@ -1,0 +1,35 @@
+{
+    "name": "default_workflow",
+    "multi_launch": true,         
+    "if_tmp": false,            
+    "daily_launch_times": [], 
+    "launch_interval_minutes": 10,
+    "retry_interval": 10,
+    "max_retry_times": 3,
+    "save_path": "./cache/tmp",
+    "tasks": [
+      {
+        "name": "current_a_share_info",
+        "task_class": "FetchAllAShareSpot",
+        "params": {
+          "save": 2,
+          "target_db": "RealtimeShare"
+        },
+        "retry_interval": 100,
+        "dependencies": {}
+      },
+      {
+        "name": "get_target_share_from_db",
+        "task_class": "FetchTargetShare",
+        "params": {
+            "register": true,
+            "source": "db",
+            "sql": "SELECT r.* FROM ashare r JOIN sector_components sc ON r.symbol = sc.stock_code JOIN sector_info s ON sc.sector_name = s.name WHERE s.name = '上证指数' AND r.update_time = (SELECT MAX(update_time) FROM ashare) ORDER BY r.turnover DESC LIMIT 1;"
+        },
+        "retry_interval": 10,
+        "dependencies": {
+            "current_a_share_info": ""
+        }
+      }
+    ]
+  }

@@ -1,0 +1,1 @@
+from core.resource.database_table import *

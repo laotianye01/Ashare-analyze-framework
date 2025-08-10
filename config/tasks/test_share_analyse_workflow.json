@@ -1,0 +1,46 @@
+{
+    "name": "share_analyze",
+    "multi_launch": false,     
+    "if_tmp": true,                
+    "daily_launch_times": [], 
+    "launch_interval_minutes": 60,
+    "retry_interval": 1,
+    "max_retry_times": 3,
+    "save_path": "./cache/tmp",
+    "tasks": [
+      {
+        "name": "fetch_target_data",
+        "task_class": "FetchCompanyData",
+        "params": {
+          "stock_code": ""
+        },
+        "retry_interval": 10,
+        "dependencies": {}
+      },
+      {
+        "name": "draw_company_graph",
+        "task_class": "DrawGraph",
+        "params": {
+          "data": {}
+        },
+        "retry_interval": 10,
+        "dependencies": {
+          "fetch_target_data": "data"
+        }
+      },
+      {
+        "name": "analyze_company_status",
+        "task_class": "FetchAILLMChat",
+        "params": {
+          "use_long_term_memory": false,
+          "vector_database_index": "",
+          "user_prompt": "你将作为我的分析员。下面为我将你提供的若干信息，请你根据有关信息，生成对应公司的的简报，并分析其未来经营情况，与市场可能对其产生的预期",
+          "all_data": {}
+        },
+        "retry_interval": 10,
+        "dependencies": {
+          "fetch_target_data": "all_data"
+        }
+      }
+    ]
+  }

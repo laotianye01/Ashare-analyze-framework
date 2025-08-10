@@ -1,0 +1,252 @@
+:root {
+    --primary-color: #007BFF;
+    --secondary-color: #F8F9FA;
+    --text-color: #333;
+    --border-color: #dee2e6;
+    --success-color: #28a745;
+    --running-color: #ffc107;
+    --failed-color: #dc3545;
+    --pending-color: #6c757d;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f7f9;
+    color: var(--text-color);
+}
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+main {
+    display: flex;
+    height: calc(100vh - 61px);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: var(--secondary-color);
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    overflow-y: auto;
+    flex-shrink: 0; 
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.content-panel {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-success { background-color: var(--success-color); }
+.status-running { background-color: var(--running-color); }
+.status-failed { background-color: var(--failed-color); }
+.status-pending { background-color: var(--pending-color); }
+.status-hanging { background-color: #0d6efd; }
+
+.stop-btn {
+    margin-left: 10px;
+    padding: 2px 8px;
+    font-size: 0.8em;
+    color: white;
+    background-color: #dc3545; /* Bootstrap 'danger' red */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.stop-btn:hover {
+    background-color: #c82333;
+}
+
+.scheduler-item span {
+    /* 确保ID文本和按钮布局合理 */
+    margin-right: auto; 
+}
+
+/* 添加一个 `pipeline-list` 的样式 */
+.pipeline-list {
+    list-style: none;
+    padding-left: 20px; /* 缩进 */
+    margin-top: 5px;
+    display: none; /* 默认隐藏 */
+}
+
+/* 当列表有 `visible` 类时显示 */
+.pipeline-list.visible {
+    display: block;
+}
+
+/* 流水线项的样式 */
+.pipeline-item {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 3px;
+    transition: background-color 0.2s;
+}
+
+.pipeline-item:hover {
+    background-color: #e9ecef;
+}
+
+.pipeline-item.active {
+    background-color: #007BFF;
+    color: white;
+}
+
+.save-btn {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background-color: #007BFF; /* Bootstrap primary color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+    background-color: #0056b3;
+}
+
+/* 容器样式，保持与下拉菜单和按钮对齐 */
+.config-editor-container {
+    margin-top: 20px;
+}
+
+/* 文本编辑框样式 */
+#config-editor {
+    width: 100%; /* 填充父容器的宽度 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace; /* 使用等宽字体，便于查看代码 */
+    font-size: 14px;
+    background-color: #f8f8f8;
+    color: #333;
+    box-sizing: border-box; /* 确保内边距和边框包含在总宽度内 */
+    resize: vertical; /* 允许用户只垂直调整大小 */
+    min-height: 200px; /* 设置一个最小高度 */
+    white-space: nowrap; /* 防止文本换行 */
+    overflow-x: auto;    /* 启用水平滚动条 */
+}
+
+/* 标题样式 */
+.config-editor-container h4 {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+#pipeline-view,
+#task-details {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#pipeline-view h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#pipeline-view h2 #pipeline-status {
+    font-size: 16px;
+}
+
+#mermaid-container {
+    margin-top: 20px;
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    overflow-x: auto;
+}
+
+#task-info {
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+#task-info h4 {
+    margin-bottom: 5px;
+}
+
+#task-info pre {
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 5px;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+#start-scheduler-form {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+#start-scheduler-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#start-scheduler-form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#start-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--success-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+#start-btn:hover {
+    background-color: #218838;
+}
