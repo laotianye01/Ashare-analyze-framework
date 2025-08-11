@@ -25,20 +25,39 @@ def test_fetch_bing_news():
     print(result)
     
 def test_AILLM():
+    data = {}
     resource_conf = './config/resource/resource_conf.json'
-    task_params = {
+    
+    # task_name1 = "get_share_history"
+    # task_param1 = {
+    #     "stock_code": "600301",
+    #     "save": 1,
+    #     "target_db": "RealtimeShare"
+    # }
+    # fun1 = FetchAShareHistory()
+    # result1 = fun1.static_execute(FetchAShareHistory, resource_conf, 'bb', task_param1, {}).get("data")
+    # data[task_name1] = result1
+    
+    task_name2 = "get_financial_report"
+    task_param2 = {
+        "register": False,
+        "save": 1,
+        "target_db": "FinanceStatement",
+        "stock_code": "600301"
+    }
+    fun2 = FetchFinReport()
+    result2 = fun2.static_execute(FetchFinReport, resource_conf, 'aa', task_param2, {}).get("data")
+    data[task_name2] = result2
+    
+    task_param3 = {
         "use_long_term_memory": False,
         "vector_database_index": "",
-        "user_prompt": "你将作为我的新闻分析员。下面为我想你提供的若干条财经新闻，请你选出其中对中国金融市场有影响的新闻，并基于其内容，提取关键信息，并将新闻摘要返回给我",
-        "net_search_prompt": """
-            七部门：加快构建科技金融体制
-            2025-05-15 10:16七部门出台15项举措 引导更多金融资源流向科技创新领域
-            2025-05-15 10:15国办印发国务院2025年度立法工作计划
-        """
+        "user_prompt": "你将作为我的投资。下面为我将你提供的若干信息，请你对数据与信息进行提炼，详细分析其中所蕴含的趋势，找出其中变化趋势异常，或是较为重要的数据并分析可能导致其的原因，将这些数据进行分类整理",
+        "all_data": data
     }
 
-    fun = FetchAILLMChat()
-    result = fun.custom_task(resource_conf, task_params).get("data")
+    fun3 = FetchAILLMChat()
+    result = fun3._custom_task(resource_conf, task_param3).get("data")
     print(result)
 
 # -----------以下内容用于测试函数用于测试大盘数据的插入 + 目标股票的获取（读取数据库并分析）+ 目标股票历史数据与财报的获取 + 对应数据的存储----------- #
@@ -100,7 +119,7 @@ def test_analyze():
     task_params = {
         "use_long_term_memory": False,
         "vector_database_index": "",
-        "user_prompt": "你将作为我的分析员。下面为我将你提供的若干信息，请你根据有关信息，生成对应公司的的简报，并分析其未来经营情况，与市场可能对其产生的预期",
+        "user_prompt": "你将作为我的投资。下面为我将你提供的若干信息，请你根据有关信息，生成对应公司的的简报，并分析其未来经营情况，与市场可能对其产生的预期",
         "all_data": data
     }
     fun = FetchAILLMChat()
@@ -257,13 +276,27 @@ def test_save_fin_report():
             print(f"throw excption: {e}")
         
         time.sleep(2)
+        
+def insert_sector():
+    resource_conf = './config/resource/resource_conf.json'
+    
+    task_params = {"init":True}
+    fun_all = UpdataRealSector()
+    result = fun_all._custom_task(resource_conf, task_params).get("data")
+    
+            
+            
+    
+# TODO：添加平行系统，可不使用数据库
+# TODO：添加GUI
 
 if __name__ == "__main__":
-    # test_AILLM()
+    # insert_sector()
+    test_AILLM()
     # test_fetch_bing_news()
     # test_postgre_insert_and_query()
     # gen_ORM()
     # test_postgre()
     # get_ER()
     # test_analyze()
-    test_save_fin_report()
+    # test_save_fin_report()
