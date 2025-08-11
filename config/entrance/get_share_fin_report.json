@@ -13,7 +13,7 @@
         "task_class": "FetchStockNews",
         "params": {
           "stock_code": "",
-          "save": 2,
+          "save": 1,
           "target_db": "StockNews"
         },
         "retry_interval": 10,
@@ -26,7 +26,7 @@
           "register": false,
           "convert": true,
           "subject_into": "./data/3main_chart/3finance_charts_main_subject.csv",
-          "save": 2,
+          "save": 0,
           "target_db": "FinanceStatement",
           "stock_code": ""
         },
